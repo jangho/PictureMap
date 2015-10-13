@@ -1,0 +1,163 @@
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.shuewe.picturemap.MainActivity" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentLeft="true"
+    android:orientation="vertical"
+    android:id="@+id/container"
+     >
+      <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar"
+        ></include>
+      <RelativeLayout 
+    android:layout_width="match_parent"
+     android:layout_weight="1"
+    android:layout_height="0dp"
+    
+    >
+         <LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentLeft="true"
+    android:paddingBottom="2dp"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="3dp"
+    android:orientation="vertical"
+    
+     >
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/piclist"
+        android:layout_weight="10"
+        android:layout_marginTop="5sp"
+        android:layout_marginBottom="5sp"
+        >
+    </ListView>
+    <TextView android:id="@+id/empty"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:text="@string/empty"
+        android:visibility="gone"
+        android:gravity="center"
+        android:textColor="#AAAAAA"/>
+    <TextView android:id="@+id/empty2"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:text="@string/empty2"
+        android:visibility="gone"
+        android:gravity="center"
+        android:textColor="#AAAAAA"/>    
+    
+    
+</LinearLayout>
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentLeft="true"
+    android:orientation="vertical"
+    android:visibility="gone"
+    android:gravity="center_horizontal"
+    android:background="#F0AAAAAA"
+    android:paddingLeft="10sp"
+    android:id="@+id/help"
+     >
+    <TextView android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tutorial"
+        android:textSize="22sp"
+        android:layout_marginTop="12sp"
+        android:layout_marginBottom="12sp"/>
+    <TextView android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        android:text="@string/tuterkl"/>
+    <ImageView android:layout_width="wrap_content"
+        android:id="@+id/helpimage"
+        android:layout_height="wrap_content"
+        android:padding="7dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/ibutton_enabled"
+        android:src="@drawable/map"/>
+    <TextView android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/helptext"
+        android:text="@string/helplupe"
+        android:textSize="16sp"/>
+    </LinearLayout>
+    </RelativeLayout>
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="3dp"
+        android:paddingBottom="2dp">
+        <TextView android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+        <ImageButton
+        android:id="@+id/b1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="7dp"
+        android:src="@drawable/lupe"
+        android:background="@drawable/ibutton"
+        android:text="@string/zeit"
+        android:onClick="nachZeit" /> 
+          <ImageView 
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/> 
+    <ImageButton
+        android:id="@+id/b3"
+        android:padding="7dp"
+		android:layout_width="wrap_content"
+		android:src="@drawable/map"
+        android:background="@drawable/ibutton"
+		android:layout_height="wrap_content"
+		android:onClick="anzeigen"        
+        />
+         <ImageView 
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/> 
+    <ImageButton
+        android:id="@+id/b2"
+        android:layout_width="wrap_content"
+        android:src="@drawable/pic"
+        android:padding="7dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ibutton"
+        android:onClick="imp" /> 
+    <CheckBox 
+        android:id="@+id/onlyNot"
+        android:onClick="onlyNot"
+        android:textSize="15sp"
+        android:layout_width="200sp"
+        android:layout_gravity="center_vertical"
+        android:layout_height="match_parent"
+        android:checked="false"
+        android:lines="2"
+        android:visibility="gone"
+        android:text="@string/shownotset"/>
+    <ImageView 
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/> 
+    </LinearLayout>
+</LinearLayout>
+
+         
+

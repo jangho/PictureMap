@@ -1,0 +1,28 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+<dimen name="activity_horizontal_margin">16dp</dimen>
+<dimen name="activity_vertical_margin">16dp</dimen>    
+<dimen name="slidingmenuWidth">180sp</dimen>
+<dimen name="marg">200dp</dimen>
+<dimen name="slidingmenuOffset">200sp</dimen>
+<dimen name="radius">2dp</dimen>
+<color name="Primary">#2E7D32</color>
+<color name="PrimaryDark">#1B5E20</color>
+<color name="activeColour">#F4511E</color>
+<color name="activeColourPressed">#D84315</color>
+<color name="disabledColour">#BDBDBD</color>
+<color name="dgrey">#AAAAAA</color>
+<color name="backbox">#FFFFFF</color>
+<color name="actionbar">#8D8D8D</color>
+<color name="actionbartext">#FFFFFF</color>
+<color name="black">#000000</color>
+<color name="white">#FFFFFF</color>
+	<declare-styleable name="abar">
+	    <attr name="text" format="string"/>
+	    <attr name="back" format="boolean"/>
+	    <attr name="frag" format="boolean"/>
+	    <attr name="share" format="boolean"/>
+	    
+	</declare-styleable>     
+</resources>

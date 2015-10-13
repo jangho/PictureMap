@@ -1,0 +1,104 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+     tools:context="com.shuewe.picturemap.MapSelect"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:orientation="vertical">
+<RelativeLayout
+    android:layout_width="match_parent"
+     android:layout_height="0dp" 
+     android:layout_weight="1"
+     android:background="#000000">
+<LinearLayout 
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:id="@+id/container"
+     android:orientation="horizontal">
+   
+    
+     <RelativeLayout 
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:layout_height="match_parent"
+    
+    >
+
+
+
+    
+    <fragment
+        android:id="@+id/map"
+        
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.google.android.gms.maps.SupportMapFragment" />
+    <FrameLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" 
+        android:background="@android:color/transparent" />
+   <ImageButton
+            android:id="@+id/rechts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="8sp"
+        android:visibility="invisible"
+        android:background="@null"
+        android:src="@drawable/next"
+        android:onClick="rechts"/>
+    <ImageButton
+        android:id="@+id/links"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8sp"
+         android:layout_alignParentLeft="true"
+         android:visibility="invisible"
+         android:layout_centerVertical="true"
+        android:background="@null"
+        android:src="@drawable/prev"
+        android:onClick="links"/>    
+   
+    
+    <ImageView 
+        android:id="@+id/imView"
+        android:layout_alignTop="@id/map"
+        android:layout_alignLeft="@id/map"
+        android:background="@null"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        />
+
+</RelativeLayout>
+ "
+    <ImageView    
+        android:background="#AAAAAA"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        />  
+        <ImageView 
+        android:background="#CCCCCC"
+        android:layout_width="8dp"
+        android:layout_height="match_parent"
+        />
+       
+</LinearLayout>
+ <ImageButton
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/set"
+            android:layout_marginRight="0sp"
+            android:onClick="set"
+            android:background="@null"
+            />
+ </RelativeLayout>
+ <ImageView
+     android:background="#AAAAAA"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+ </LinearLayout>

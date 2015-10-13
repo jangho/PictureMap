@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100sp"
+    android:background="#FFFFFF"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <TextView 
+        android:layout_width="100sp"
+        android:layout_height="wrap_content"
+        android:text="@string/MapTyp"/>
+    <RadioGroup 
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <RadioButton android:id="@+id/normal"
+        android:layout_width="wrap_content"
+         android:checked="true"
+        android:layout_height="wrap_content"
+        android:text="@string/Normal"
+        android:onClick="MapNorm"/>
+    <RadioButton android:id="@+id/sat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:checked="false"
+        android:text="@string/Sat"
+        android:onClick="MapSat"/>
+    <RadioButton android:id="@+id/hyb"
+        android:checked="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Hyb"
+        android:onClick="MapHyb"/>
+</RadioGroup>
+<CheckBox 
+    android:id="@+id/goth"
+    android:layout_marginTop="15sp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/navi"
+    android:checked="false"
+    android:onClick="Navi"/>
+</LinearLayout>

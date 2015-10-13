@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MapSelect">
+    
+    <item
+        android:id="@+id/copy"
+        android:orderInCategory="1"
+        android:title="copy"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/copy"
+        ></item>
+     <item
+        android:id="@+id/save"
+        android:orderInCategory="1"
+        android:title="save"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/save"
+        ></item>
+ 
+</menu>
