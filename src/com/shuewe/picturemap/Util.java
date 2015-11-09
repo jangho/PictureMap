@@ -45,8 +45,6 @@ public class Util {
         	inSampleSize=(int)Math.ceil(width/reqWidth);
         }
     }
-    	
-
     return inSampleSize;
 }
 	
@@ -83,39 +81,33 @@ public class Util {
 		final int i=id;
 		final String a=action.replace(" ", "_");
 		Thread thread = new Thread(new Runnable(){
-
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
 				URL url;
 				try {
 					url = new URL("http://www.shuewe.de/actionPic.php?id="+String.valueOf(i)+"&action="+a);
-				
-				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-				InputStream response = conn.getInputStream();
-				} catch (MalformedURLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				//Log.d("out", resp.getStatusLine().toString());
+					HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+					InputStream response = conn.getInputStream();
+					} catch (MalformedURLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 			}
-			
-		
 		});
-thread.start();
+		thread.start();
 	}
 	//Work around for getDrawable(i,y) for older android versions
 	@SuppressLint("NewApi")
 	public static Drawable getDrawable(Resources res,int resInt){
 		if(android.os.Build.VERSION.SDK_INT< 21){
-		return 	res.getDrawable(resInt);
-	}else{
-		return res.getDrawable(resInt, null);
-	}
+			return 	res.getDrawable(resInt);
+		}else{
+			return res.getDrawable(resInt, null);
+		}
 	}
 	
 	
@@ -128,8 +120,8 @@ thread.start();
 		    iv.setBackground(d);
 		}
 	}
-	public static String fmt(double d)
-	{
+	
+	public static String fmt(double d){
 	    if(d == (int) d)
 	        return String.format("%d",(int)d);
 	    else
@@ -144,17 +136,12 @@ thread.start();
         if (sanselanmetadata instanceof JpegImageMetadata) {
             JpegImageMetadata jpegMetadata = (JpegImageMetadata) sanselanmetadata;
             TiffImageMetadata tiffImageMetadata = jpegMetadata.getExif();
-            
-            
-
-            // print all GPS
             if(tiffImageMetadata!=null){
-            TiffImageMetadata.GPSInfo gpsInfo = tiffImageMetadata.getGPS();
-         
-            if(gpsInfo!=null){
-            latlng[0]= gpsInfo.getLatitudeAsDegreesNorth();
-            latlng[1]= gpsInfo.getLongitudeAsDegreesEast();
-            }
+            	TiffImageMetadata.GPSInfo gpsInfo = tiffImageMetadata.getGPS();
+            	if(gpsInfo!=null){
+            		latlng[0]= gpsInfo.getLatitudeAsDegreesNorth();
+            		latlng[1]= gpsInfo.getLongitudeAsDegreesEast();
+            	}
             }
         }
         return latlng;

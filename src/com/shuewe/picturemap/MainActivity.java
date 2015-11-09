@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements DatePickedListene
  	TextView dp1,dp2;
 	private Toolbar toolbar;
 	ImageButton selectedHelp;
+	boolean oriOK=true;
  	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -269,44 +270,35 @@ public class MainActivity extends AppCompatActivity implements DatePickedListene
 				iv.setImageDrawable(Util.getDrawable(getResources(), R.drawable.frag));
 				Util.setDrawable(null,iv);
 				((TextView) findViewById(R.id.helptext)).setText(getResources().getString(R.string.helpcontact));
-				
 			}else{
-			final Dialog dialog = new Dialog(this);
-			dialog.setContentView(R.layout.rate);
-			dialog.setTitle((res.getString(R.string.titKon)));
-			ImageButton btnAdd1 = (ImageButton) dialog.findViewById(R.id.mail);
-
-			ImageButton btnAdd2 = (ImageButton) dialog.findViewById(R.id.giverate);
-
-			btnAdd1.setOnClickListener(new OnClickListener() {
-			    public void onClick(View v) {
-			    	Intent intent = new Intent(Intent.ACTION_SEND);
-			    	intent.setType("text/html");
-			    	intent.putExtra(Intent.EXTRA_EMAIL, "shuewe87@gmail.com");
-			    	intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback to Geo Foto Map");
-
-			    	startActivity(Intent.createChooser(intent, "Send Email"));
-
-			    }
-			});
-
-			btnAdd2.setOnClickListener(new OnClickListener() {
-			    public void onClick(View v) {
-			    	Intent intent = new Intent(Intent.ACTION_VIEW);
-			    	intent.setData(Uri.parse("market://details?id=com.shuewe.picturemap"));
-			       // intent.setData(Uri.parse("http://play.google.com/store/apps/details?id=com.shuwe.picturemap"));
-			        // btnAdd2 has been clicked
-			        startActivity(intent);
-			    }
-			});
-
-			dialog.show();	
-			return true;
-		}
+				final Dialog dialog = new Dialog(this);
+				dialog.setContentView(R.layout.rate);
+				dialog.setTitle((res.getString(R.string.titKon)));
+				ImageButton btnAdd1 = (ImageButton) dialog.findViewById(R.id.mail);
+				ImageButton btnAdd2 = (ImageButton) dialog.findViewById(R.id.giverate);
+				btnAdd1.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+						Intent intent = new Intent(Intent.ACTION_SEND);
+						intent.setType("text/html");
+						intent.putExtra(Intent.EXTRA_EMAIL, "shuewe87@gmail.com");
+						intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback to Geo Foto Map");
+						startActivity(Intent.createChooser(intent, "Send Email"));
+					}
+				});
+				btnAdd2.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+						Intent intent = new Intent(Intent.ACTION_VIEW);
+						intent.setData(Uri.parse("market://details?id=com.shuewe.picturemap"));
+						startActivity(intent);
+					}
+				});
+				dialog.show();	
+				return true;
+			}
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	//Import of single pictures by the user
+	//Start import of single pictures by the user
 	public void imp(View v){
 		if(findViewById(R.id.help).getVisibility()==View.VISIBLE){
 			unsetHelp();
@@ -316,24 +308,24 @@ public class MainActivity extends AppCompatActivity implements DatePickedListene
 			iv.setImageDrawable(Util.getDrawable(getResources(), R.drawable.pic));
 			Util.setDrawable(Util.getDrawable(getResources(), R.drawable.ibutton_enabled),iv);
 			((TextView) findViewById(R.id.helptext)).setText(getResources().getString(R.string.helplupe));
-			}else{	
-		buttonset(false);
-		if (android.os.Build.VERSION.SDK_INT>= 19){
-			Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-		    intent.addCategory(Intent.CATEGORY_OPENABLE);
-		    intent.setType("image/jpeg");
-		    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-		    startActivityForResult(intent, 1);
-		}else{
-			Intent intent = new Intent();
-			intent.setType("image/*");
-			intent.setAction(Intent.ACTION_GET_CONTENT);
-			startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);	
-		}
+		}else{	
+			buttonset(false);
+			if (android.os.Build.VERSION.SDK_INT>= 19){
+				Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+				intent.addCategory(Intent.CATEGORY_OPENABLE);
+				intent.setType("image/jpeg");
+				intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+				startActivityForResult(intent, 1);
+			}else{
+				Intent intent = new Intent();
+				intent.setType("image/*");
+				intent.setAction(Intent.ACTION_GET_CONTENT);
+				startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);	
+			}
 		}
 	}
 	
-	//Handle of results from Handler. Used to handle click events from listview adapter
+	//Handle of results from Handler. Reqcode=1: chosen pictures by user, Used to handle click events from listview adapter
 	@SuppressLint("NewApi")
 	protected void onActivityResult(int reqcode,int rescode,Intent data ){
 		ClipData clipdata; 
@@ -368,9 +360,6 @@ public class MainActivity extends AppCompatActivity implements DatePickedListene
 					}
 				}
 				buttonset(true);
-				//if(latlist.size()==0){
-				//	b3.setEnabled(false);
-				//}
 			}
 			addList();
 		}else if(reqcode!=1111 & reqcode!= 11& data!=null){
@@ -433,10 +422,9 @@ public class MainActivity extends AppCompatActivity implements DatePickedListene
 	private String getPath(Context context,Uri uri){
 		if (android.os.Build.VERSION.SDK_INT< 19){
 			if( uri == null ) {
-             return null;
+				return null;
 			}
-			// try to retrieve the image from the media store first
-			// this will only work for images selected from gallery
+			// try to retrieve the image from the media store
 			String[] projection = { MediaStore.Images.Media.DATA };
 			@SuppressWarnings("deprecation")
 			String[] column = { MediaStore.Images.Media.DATA, MediaStore.Images.Media.ORIENTATION};
@@ -446,6 +434,8 @@ public class MainActivity extends AppCompatActivity implements DatePickedListene
 				cursor.moveToFirst();
 				ori.add(cursor.getInt(1));
 				return cursor.getString(column_index);
+			}else{
+				oriOK=false;
 			}
 			return uri.getPath();
 		}else{
@@ -466,7 +456,9 @@ public class MainActivity extends AppCompatActivity implements DatePickedListene
 			if (cursor.moveToFirst()) {
 				filePath = cursor.getString(columnIndex);
 				ori.add(cursor.getInt(1));
-			}   
+			}else{
+				oriOK=false;
+			}
 			cursor.close();
 			return filePath;
 		}
@@ -618,46 +610,37 @@ if(findViewById(R.id.help).getVisibility()==View.VISIBLE){
 	private void addPic(String s) throws ImageReadException, IOException{
     	if(!s.equals("")){
     		IImageMetadata sanselanmetadata = Sanselan.getMetadata(new File(s));
-    		 if (sanselanmetadata instanceof JpegImageMetadata) {
+    		if (sanselanmetadata instanceof JpegImageMetadata) {
  	            JpegImageMetadata jpegMetadata = (JpegImageMetadata) sanselanmetadata;
  	            TiffImageMetadata tiffImageMetadata = jpegMetadata.getExif();
- 	            
- 	            
-
- 	            // print all GPS
  	            if(tiffImageMetadata!=null){
- 	            TiffImageMetadata.GPSInfo gpsInfo = tiffImageMetadata.getGPS();
- 	            
- 	            if(gpsInfo!=null){
- 	            
- 	           plist.add(s);
- 	  	    latlist.add((double) gpsInfo.getLatitudeAsDegreesNorth());
- 	  	    lnglist.add((double) gpsInfo.getLongitudeAsDegreesEast());
- 	            }else{
- 	            	plist.add(s);
- 	    	  	    latlist.add(0.0);
- 	    	  	    lnglist.add(0.0);
+ 	            	TiffImageMetadata.GPSInfo gpsInfo = tiffImageMetadata.getGPS();
+ 	            	if(gpsInfo!=null){
+ 	            		plist.add(s);
+ 	            		latlist.add((double) gpsInfo.getLatitudeAsDegreesNorth());
+ 	            		lnglist.add((double) gpsInfo.getLongitudeAsDegreesEast());
+ 	            	}else{
+ 	            		plist.add(s);
+ 	            		latlist.add(0.0);
+ 	            		lnglist.add(0.0);
+ 	            	}
  	            }
- 	            }
-    		 }
-    		
-    		
-    		
-    		 }else{
-	    	ori.remove(ori.size()-1);
+    		}
+    	}else{
+    		if(oriOK){
+    			ori.remove(ori.size()-1);
+    		}
 	    	Toast.makeText(this, res.getString(R.string.wrongformat), Toast.LENGTH_LONG).show();
 	    	if(latlist.size()==0){
 				b3.setEnabled(false);
-			}
-    		 
-    	else{
-    		Toast.makeText(this, res.getString(R.string.wrongformat), Toast.LENGTH_LONG).show();
-    		if(latlist.size()==0){
-    			b3.setEnabled(false);
+			}else{
+				Toast.makeText(this, res.getString(R.string.wrongformat), Toast.LENGTH_LONG).show();
+				if(latlist.size()==0){
+					b3.setEnabled(false);
+				}
 			}
     	}
-    		 }
-    	
+    	oriOK=true;
 	}
 	//Handler for Listview adapter and import thread
 	public Handler handler2=new Handler(){
@@ -669,40 +652,39 @@ if(findViewById(R.id.help).getVisibility()==View.VISIBLE){
 				addList();
 				buttonset(true);
 				if(latlist.size()==0){
-					
 					b3.setEnabled(false);
 				}
 				
-				}else if(msg.arg1==2){
-					latlist.add((Double.valueOf(((String[])msg.obj)[0])));
-					lnglist.add((Double.valueOf(((String[])msg.obj)[1])));
-					plist.add(((String[])msg.obj)[2]);
-					ori.add((Integer.valueOf(((String[])msg.obj)[3])));
-				}else if(msg.arg1==101 || msg.arg1==102){
-			if(isNetworkAvailable()){
-			try {
-				if(testWrite(plist.get(msg.arg2))){
-					Intent z = new Intent(MainActivity.this,MapSelect.class);
-					EreignisClass Ere = new EreignisClass(MainActivity.this,EreignisClass.writeOK);
-				if(Ere.getID()>-1){
-					if(Ere.getValString().equals("no")){
-						Ere.setValString("ok");
-						Ere.inDB();
-						EreignisClass Ere2 = new EreignisClass(MainActivity.this,EreignisClass.Eid);
-						Util.sendDB("write_ok_"+plist.get(msg.arg2), Ere2.getVal().intValue());
-					}
-				}
-					if(msg.arg1==102){
-//						if(onlyNot.getVisibility()==View.VISIBLE && onlyNot.isChecked()){
-//							z.putExtra("Lat", 0);
-//							z.putExtra("Lng", 0);
-//							z.putStringArrayListExtra("plist", (ArrayList<String>) plist);
-//							ArrayList<String> orilist = new ArrayList<String>();
-//							for (int s: ori){
-//								orilist.add(String.valueOf(s));	 
-//							 }
-//							z.putStringArrayListExtra("ori", orilist);
-//						}else{
+			}else if(msg.arg1==2){
+				latlist.add((Double.valueOf(((String[])msg.obj)[0])));
+				lnglist.add((Double.valueOf(((String[])msg.obj)[1])));
+				plist.add(((String[])msg.obj)[2]);
+				ori.add((Integer.valueOf(((String[])msg.obj)[3])));
+			}else if(msg.arg1==101 || msg.arg1==102){
+				if(isNetworkAvailable()){
+					try {
+						if(testWrite(plist.get(msg.arg2))){
+							Intent z = new Intent(MainActivity.this,MapSelect.class);
+							EreignisClass Ere = new EreignisClass(MainActivity.this,EreignisClass.writeOK);
+							if(Ere.getID()>-1){
+								if(Ere.getValString().equals("no")){
+									Ere.setValString("ok");
+									Ere.inDB();
+									EreignisClass Ere2 = new EreignisClass(MainActivity.this,EreignisClass.Eid);
+									Util.sendDB("write_ok_"+plist.get(msg.arg2), Ere2.getVal().intValue());
+								}
+							}
+							if(msg.arg1==102){
+//								if(onlyNot.getVisibility()==View.VISIBLE && onlyNot.isChecked()){
+//									z.putExtra("Lat", 0);
+//									z.putExtra("Lng", 0);
+//									z.putStringArrayListExtra("plist", (ArrayList<String>) plist);
+//									ArrayList<String> orilist = new ArrayList<String>();
+//									for (int s: ori){
+//										orilist.add(String.valueOf(s));	 
+//							 		}
+//									z.putStringArrayListExtra("ori", orilist);
+//								}else{
 							z.putExtra("Lat", latlist.get(msg.arg2));
 							z.putExtra("Lng", lnglist.get(msg.arg2));
 							z.putExtra("path", plist.get(msg.arg2));
@@ -816,51 +798,43 @@ if(findViewById(R.id.help).getVisibility()==View.VISIBLE){
 	private void makequery(){
 		dat2.set(Calendar.HOUR_OF_DAY, 23);
 		dat2.set(Calendar.MINUTE, 59);
-		 String[] projection = new String[]{
+		String[] projection = new String[]{
 		            MediaStore.Images.ImageColumns.DATA,
 		            MediaStore.Images.ImageColumns.DATE_TAKEN,
 		            MediaStore.Images.ImageColumns.ORIENTATION,
 		            MediaStore.Images.ImageColumns.DISPLAY_NAME
-		    };
-
-		    // Get the base URI for the People table in the Contacts content provider.
-		    Uri images = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-		    
-		    String selection=MediaStore.Files.FileColumns.MIME_TYPE + "=? AND "+MediaStore.Images.ImageColumns.DATE_TAKEN+" > ? AND "+MediaStore.Images.ImageColumns.DATE_TAKEN+" < ?";
-		    String[] selectionarg=new String[3];
-		    selectionarg[0]=MimeTypeMap.getSingleton().getMimeTypeFromExtension("jpg");
-		    selectionarg[1]=String.valueOf(dat1.getTimeInMillis());
-		    selectionarg[2]=String.valueOf(dat2.getTimeInMillis());
-		    // Make the query.
-		    Cursor cur;
-		    if (android.os.Build.VERSION.SDK_INT< 11){
-		    cur = managedQuery(images, projection, selection, selectionarg, MediaStore.Images.ImageColumns.DATE_TAKEN +" DESC;");
-		    }else{
-		    
+		};
+		Uri images = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;    
+		String selection=MediaStore.Files.FileColumns.MIME_TYPE + "=? AND "+MediaStore.Images.ImageColumns.DATE_TAKEN+" > ? AND "+MediaStore.Images.ImageColumns.DATE_TAKEN+" < ?";
+		String[] selectionarg=new String[3];
+		selectionarg[0]=MimeTypeMap.getSingleton().getMimeTypeFromExtension("jpg");
+		selectionarg[1]=String.valueOf(dat1.getTimeInMillis());
+		selectionarg[2]=String.valueOf(dat2.getTimeInMillis());
+		// Make the query.
+		Cursor cur;
+		if (android.os.Build.VERSION.SDK_INT< 11){
+			cur = managedQuery(images, projection, selection, selectionarg, MediaStore.Images.ImageColumns.DATE_TAKEN +" DESC;");
+		}else{
 		    cur =getContentResolver().query(images,
 		            projection, // Which columns to return
 		            selection,       // Which rows to return (all rows)
 		            selectionarg,       // Selection arguments (none)
 		            MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC"        // Ordering
-		            );}
-		    List<String> pa = new ArrayList<String>();
-		    List<Integer> o = new ArrayList<Integer>();
-		    
-		    if(cur.moveToFirst()){
-		    	pa.add(cur.getString(0));
-		    	o.add(cur.getInt(2));
-					}
-		    		
-		    	while(cur.moveToNext()){
-		    		pa.add(cur.getString(0));
-		    		o.add(cur.getInt(2));
-							//addPic(cur.getString(0));
-						}
-			    		
-		    
-		   cur.close();
-		   Importer imp= new Importer(handler2,pa,o);
-		   imp.start();
+		    );
+		}
+		List<String> pa = new ArrayList<String>();
+		List<Integer> o = new ArrayList<Integer>();    
+		if(cur.moveToFirst()){
+			pa.add(cur.getString(0));
+		    o.add(cur.getInt(2));
+		}    		
+		while(cur.moveToNext()){
+		    pa.add(cur.getString(0));
+		    o.add(cur.getInt(2));
+		}    
+		cur.close();
+		Importer imp= new Importer(handler2,pa,o);
+		imp.start();
 	}
 	//Methods to handle the responses from the Dialog to search pictures by date
 	public void dat(View view){
